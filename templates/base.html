@@ -12,17 +12,27 @@
                 <div class="nav-left">
                     <h1><a href="{% url 'home' %}">Rain Blog</a></h1>
                 </div>
-                <div class="nav-right">
-                    <a href="{% url 'post_new' %}">Add New Blog Post</a>
-                </div>
+                {% if user.is_authenticated %}
+                    <div class="nav-right">
+                        <a href="{% url 'post_new' %}">Add New Blog Post</a>
+                        <div>
+                            <p>Hi {{ user.username }}!</p>
+                            <p><a href="{% url 'logout' %}">Log out</a></p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="nav-right">
+                        <p>You are not logged in.</p>
+                        <div>
+                            <p><a href="{% url 'login' %}">Log In</a></p>
+                            <p><a href="{% url 'signup' %}">Sign Up</a></p>
+                        </div>
+                    </div>
+                {% endif %}
             </header>
-            {% if user.is_authenticated %}
-                <p>Hi {{ user.username }}!</p>
-                <p><a href="{% url 'logout' %}">Log out</a></p>
-            {% else %}
-                <p>You are not logged in.</p>
-                <a href="{% url 'login' %}">Log In</a>
-            {% endif %}
+            <div class="nav-right">
+                
+            </div>
         {% block content %}
         {% endblock content %}
         </div>
